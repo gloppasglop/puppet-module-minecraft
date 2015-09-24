@@ -21,16 +21,19 @@
 #  }
 #
 class minecraft(
-  $user          = 'mcserver',
-  $group         = 'mcserver',
-  $homedir       = '/opt/minecraft',
-  $manage_java   = true,
-  $manage_screen = true,
-  $manage_curl   = true,
+  $user          = undef,
+  $group         = undef,
+  $homedir       = undef,
+  $manage_java   = undef,
+  $manage_screen = undef,
+  $manage_curl   = undef,
   $heap_size     = 2048,
   $heap_start    = 512,
+  $instance      = 'minecraft',
 )
 {
+  include minecraft::params
+
   if $manage_java {
     class { 'java':
       distribution => 'jre',
@@ -93,17 +96,17 @@ class minecraft(
     mode   => '0664',
   } -> Minecraft::Whitelist<| |>
 
-  file { '/etc/init.d/minecraft':
+  file { '/etc/systemd/system/minecraft.service':
     ensure  => present,
     owner   => 'root',
     group   => 'root',
     mode    => '0744',
-    content => template('minecraft/minecraft_init.erb'),
+    content => template('minecraft/minecraft_service.erb'),
   }
 
   service { 'minecraft':
     ensure    => running,
-    require   => File['/etc/init.d/minecraft'],
+    require   => File['/etc/systemd/system/minecraft.service'],
     subscribe => S3file["${homedir}/minecraft_server.jar"],
   }
 }

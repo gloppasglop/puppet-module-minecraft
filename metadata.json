@@ -1,0 +1,20 @@
+{
+  "name": "gloppasglop-minecraft",
+  "version": "0.1.0",
+  "author": "gloppasglop",
+  "summary": "Minecraft module. Copied from branan/puppet-module-minecraft",
+  "license": "Apache 2.0",
+  "source": "https://github.com/gloppasglop/puppet-module-minecraft.git",
+  "project_page": null,
+  "issues_url": null,
+  "dependencies": [
+    {
+      "name": "puppetlabs-stdlib",
+      "version_range": ">= 1.0.0"
+    },
+    {
+      "name": "puppetlabs-java",
+      "version_range": ">= 1.0.0"
+    }
+  ]
+}
