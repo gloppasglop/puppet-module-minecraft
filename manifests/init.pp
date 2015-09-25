@@ -40,7 +40,15 @@ class minecraft(
   $http_root,                
 ) inherits minecraft::params {
 
-   firewalld::custom_service{"Minecraft_service_port_${server_port}":
+  firewalld_zone { 'public':
+    ensure           => present,
+    target           => '%%REJECT%%',
+    purge_rich_rules => true,
+    purge_services   => true,
+  }
+
+
+  firewalld::custom_service{"Minecraft_service_port_${server_port}":
       short       => "Minecraft_${server_port}",
       description => 'Minecraft',
       port        => [
@@ -49,13 +57,26 @@ class minecraft(
             'protocol' => 'tcp',
         },
       ],
-    }
+  }
 
     firewalld_service { "Allow Minecraft port ${server_port}":
     ensure  => 'present',
     service => "Minecraft_service_port_${server_port}",
     zone    => 'public',
   }
+
+  firewalld_service { 'Allow SSH from the public zone':
+    ensure  => 'present',
+    service => 'ssh',
+    zone    => 'public',
+  }
+
+  firewalld_service { 'Allow dhcpv6-client from the public zone':
+    ensure  => 'present',
+    service => 'dhcpv6-client',
+    zone    => 'public',
+  }
+
 
   if $manage_java {
     class { 'java':
