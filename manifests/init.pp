@@ -126,6 +126,6 @@ class minecraft(
   service { 'minecraft':
     ensure    => running,
     require   => File['/etc/systemd/system/minecraft.service'],
-    subscribe => S3file["${homedir}/minecraft_server_${version}.jar"],
+    subscribe => [ S3file["${homedir}/minecraft_server_${version}.jar"], File["${homedir}/server.properties"] ],
   }
 }
