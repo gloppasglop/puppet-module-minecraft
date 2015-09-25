@@ -16,5 +16,6 @@ class minecraft::params {
     default: {
       fail("Unsupported platform: ${module_name} currently doesn't support ${::osfamily}")
     }
- }
+  }
+}
 
