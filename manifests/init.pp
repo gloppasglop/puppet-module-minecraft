@@ -48,7 +48,7 @@ class minecraft(
   }
 
 
-  firewalld::custom_service{"Minecraft_service_port_${server_port}":
+  firewalld::custom_service{"Minecraft__${server_port}":
       short       => "Minecraft_${server_port}",
       description => 'Minecraft',
       port        => [
@@ -61,7 +61,7 @@ class minecraft(
 
     firewalld_service { "Allow Minecraft port ${server_port}":
     ensure  => 'present',
-    service => "Minecraft_service_port_${server_port}",
+    service => "Minecraft_${server_port}",
     zone    => 'public',
   }
 
