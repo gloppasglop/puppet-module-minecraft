@@ -21,17 +21,22 @@
 #  }
 #
 class minecraft(
-  $user          = $::minecraft::params::user,
-  $group         = $::minecraft::params::group,
-  $homedir       = $::minecraft::params::homedir,
-  $manage_java   = $::minecraft::params::manage_java,
-  $manage_screen = $::minecraft::params::manage_screen,
-  $manage_curl   = $::minecraft::params::manage_curl,
-  $version       = $::minecraft::params::version,
-  $heap_size     = 2048,
-  $heap_start    = 512,
-  $instance      = 'minecraft',
-  $eula          = false,
+  $user                     = $::minecraft::params::user,
+  $group                     = $::minecraft::params::group,
+  $homedir                  = $::minecraft::params::homedir,
+  $manage_java              = $::minecraft::params::manage_java,
+  $manage_screen            = $::minecraft::params::manage_screen,
+  $manage_curl              = $::minecraft::params::manage_curl,
+  $version                  = $::minecraft::params::version,
+  $heap_size                = 2048,
+  $heap_start               = 512,
+  $instance                 = 'minecraft',
+  $eula                     = false,
+  $gamemode                 = 0,
+  $difficulty               = 1,
+  $server_port              = 25565,
+  $online_mode              = true,
+  $motd                     = 'A Minecraft Server',
 ) inherits minecraft::params {
 
   if $manage_java {
@@ -63,12 +68,19 @@ class minecraft(
     managehome => true,
   }
 
+
   file {"${homedir}/eula.txt":
     ensure  => present,
     owner   => $user,
     group   => $group,
     content => template('minecraft/eula.txt.erb'),
     require => User[$user],
+  } ->
+  file {"${homedir}/server.properties":
+    ensure  => present,
+    owner   => $user,
+    group   => $group,
+    content => template('minecraft/server.properties.erb'),
   } ->
   s3file { "${homedir}/minecraft_server_${version}.jar":
     source  => "Minecraft.Download/versions/${version}/minecraft_server.${version}.jar",
