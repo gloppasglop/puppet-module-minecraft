@@ -8,6 +8,7 @@ class minecraft::params {
   $manage_curl   = true
   $heap_size     = 2048
   $heap_start    = 512
+  $version       = '1.8.8'
 
   case $::osfamily {
     'RedHat': {

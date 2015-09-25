@@ -27,6 +27,7 @@ class minecraft(
   $manage_java   = $::minecraft::params::manage_java,
   $manage_screen = $::minecraft::params::manage_screen,
   $manage_curl   = $::minecraft::params::manage_curl,
+  $version       = $::minecraft::params::version,
   $heap_size     = 2048,
   $heap_start    = 512,
   $instance      = 'minecraft',
@@ -62,6 +63,7 @@ class minecraft(
   }
 
   s3file { "${homedir}/minecraft_server.jar":
+    source  => "Minecraft.Download/versions/${version}/minecraft_server.${version}.jar",
     source  => 'MinecraftDownload/launcher/minecraft_server.jar',
     require => User[$user],
   }
