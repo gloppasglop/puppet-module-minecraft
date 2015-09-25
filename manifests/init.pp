@@ -55,7 +55,7 @@ class minecraft(
 
   if $manage_curl {
     package {'curl':
-      before => S3file["${homedir}/minecraft_server_${version}.jar"],
+      before => Wget::Fetch["${homedir}/minecraft_server_${version}.jar"],
     }
   }
 
@@ -128,6 +128,6 @@ class minecraft(
   service { 'minecraft':
     ensure    => running,
     require   => File['/etc/systemd/system/minecraft.service'],
-    subscribe => [ S3file["${homedir}/minecraft_server_${version}.jar"], File["${homedir}/server.properties"] ],
+    subscribe => [ Wget::Fetch["${homedir}/minecraft_server_${version}.jar"], File["${homedir}/server.properties"] ],
   }
 }
