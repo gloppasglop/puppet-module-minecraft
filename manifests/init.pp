@@ -37,6 +37,7 @@ class minecraft(
   $server_port              = 25565,
   $online_mode              = true,
   $motd                     = 'A Minecraft Server',
+  $http_root,                
 ) inherits minecraft::params {
 
   if $manage_java {
@@ -82,9 +83,10 @@ class minecraft(
     group   => $group,
     content => template('minecraft/server.properties.erb'),
   } ->
-  s3file { "${homedir}/minecraft_server_${version}.jar":
-    source  => "Minecraft.Download/versions/${version}/minecraft_server.${version}.jar",
-    require => User[$user],
+  wget::fetch {"${homedir}/minecraft_server_${version}.jar":
+    source      => "${http_root}/Minecraft.Download/versions/${version}/minecraft_server.${version}.jar",
+    destination => "${homedir}/minecraft_server_${version}.jar",
+    require     => User[$user],
   }
 
   file { "${homedir}/ops.txt":
