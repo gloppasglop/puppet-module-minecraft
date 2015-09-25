@@ -40,6 +40,23 @@ class minecraft(
   $http_root,                
 ) inherits minecraft::params {
 
+   firewalld::custom_service{"Minecraft service port ${server_port}":
+      short       => "Minecraft ${server_port}",
+      description => 'Minecraft',
+      port        => [
+        {
+            'port'     => $server_port,
+            'protocol' => 'tcp',
+        },
+      ],
+    }
+
+    firewalld_service { "Allow Minecraft port ${server_port}":
+    ensure  => 'present',
+    service => "Minecraft service port ${server_port}",
+    zone    => 'public',
+  }
+
   if $manage_java {
     class { 'java':
       distribution => 'jre',
