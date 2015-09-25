@@ -40,7 +40,7 @@ class minecraft(
   $http_root,                
 ) inherits minecraft::params {
 
-   firewalld::custom_service{"Minecraft service port ${server_port}":
+   firewalld::custom_service{"Minecraft_service_port_${server_port}":
       short       => "Minecraft ${server_port}",
       description => 'Minecraft',
       port        => [
@@ -53,7 +53,7 @@ class minecraft(
 
     firewalld_service { "Allow Minecraft port ${server_port}":
     ensure  => 'present',
-    service => "Minecraft service port ${server_port}",
+    service => "Minecraft_service_port_${server_port}",
     zone    => 'public',
   }
 
