@@ -23,6 +23,6 @@
     {
       "name": "crayfishx-firewalld",
       "version_range": ">= 1.0.0"
-    },
+    }
   ]
 }
