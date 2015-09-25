@@ -41,7 +41,7 @@ class minecraft(
 ) inherits minecraft::params {
 
    firewalld::custom_service{"Minecraft_service_port_${server_port}":
-      short       => "Minecraft ${server_port}",
+      short       => "Minecraft_${server_port}",
       description => 'Minecraft',
       port        => [
         {
