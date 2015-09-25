@@ -2,7 +2,7 @@
 class minecraft::params {
   $user          = 'mcserver'
   $group         = 'mcserver'
-  $homedir       = "/home/$user"
+  $homedir       = '/home/mcserver'
   $manage_java   = true
   $manage_screen = true
   $manage_curl   = true
