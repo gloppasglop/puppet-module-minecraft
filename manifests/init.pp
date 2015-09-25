@@ -31,6 +31,7 @@ class minecraft(
   $heap_size     = 2048,
   $heap_start    = 512,
   $instance      = 'minecraft',
+  eula           = false,
 ) inherits minecraft::params {
 
   if $manage_java {
@@ -62,6 +63,13 @@ class minecraft(
     managehome => true,
   }
 
+  file {"${homedir}/eula.txt":
+    ensure  => present,
+    owner   => $user,
+    group   => $group,
+    content => template('minecraft/eula.txt.erb'),
+    require => User[$user],
+  } ->
   s3file { "${homedir}/minecraft_server_${version}.jar":
     source  => "Minecraft.Download/versions/${version}/minecraft_server.${version}.jar",
     require => User[$user],
