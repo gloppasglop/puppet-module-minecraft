@@ -21,18 +21,16 @@
 #  }
 #
 class minecraft(
-  $user          = undef,
-  $group         = undef,
-  $homedir       = undef,
-  $manage_java   = undef,
-  $manage_screen = undef,
-  $manage_curl   = undef,
+  $user          = $::minecraft::params::user,
+  $group         = $::minecraft::params::group,
+  $homedir       = $::minecraft::params::homedir,
+  $manage_java   = $::minecraft::params::manage_java,
+  $manage_screen = $$:minecraft::params::manage_screen,
+  $manage_curl   = $$minecraft::params::manage_curl,
   $heap_size     = 2048,
   $heap_start    = 512,
   $instance      = 'minecraft',
-)
-{
-  include minecraft::params
+) inherits minecraft::params {
 
   if $manage_java {
     class { 'java':
