@@ -31,7 +31,7 @@ class minecraft(
   $heap_size     = 2048,
   $heap_start    = 512,
   $instance      = 'minecraft',
-  eula           = false,
+  $eula          = false,
 ) inherits minecraft::params {
 
   if $manage_java {
