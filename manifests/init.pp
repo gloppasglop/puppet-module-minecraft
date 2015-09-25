@@ -48,7 +48,7 @@ class minecraft(
 
   if $manage_curl {
     package {'curl':
-      before => S3file["${homedir}/minecraft_server.jar"],
+      before => S3file["${homedir}/minecraft_server_${version}.jar"],
     }
   }
 
@@ -62,9 +62,8 @@ class minecraft(
     managehome => true,
   }
 
-  s3file { "${homedir}/minecraft_server.jar":
+  s3file { "${homedir}/minecraft_server_${version}.jar":
     source  => "Minecraft.Download/versions/${version}/minecraft_server.${version}.jar",
-    source  => 'MinecraftDownload/launcher/minecraft_server.jar',
     require => User[$user],
   }
 
@@ -107,6 +106,6 @@ class minecraft(
   service { 'minecraft':
     ensure    => running,
     require   => File['/etc/systemd/system/minecraft.service'],
-    subscribe => S3file["${homedir}/minecraft_server.jar"],
+    subscribe => S3file["${homedir}/minecraft_server_${version}.jar"],
   }
 }
