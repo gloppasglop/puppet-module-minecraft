@@ -132,33 +132,34 @@ class minecraft(
     unless  => 'grep -v "^#" server.properties  | diff server.properties.tmp  -',
   }
 
-  file { "${homedir}/ops.txt":
-    ensure => present,
-    owner  => $user,
-    group  => $group,
-    mode   => '0664',
-  } -> Minecraft::Op<| |>
-
-  file { "${homedir}/banned-players.txt":
-    ensure => present,
-    owner  => $user,
-    group  => $group,
-    mode   => '0664',
-  } -> Minecraft::Ban<| |>
-
-  file { "${homedir}/banned-ips.txt":
-    ensure => present,
-    owner  => $user,
-    group  => $group,
-    mode   => '0664',
-  } -> Minecraft::Ipban<| |>
-
-  file { "${homedir}/white-list.txt":
-    ensure => present,
-    owner  => $user,
-    group  => $group,
-    mode   => '0664',
-  } -> Minecraft::Whitelist<| |>
+  #  file { "${homedir}/ops.txt":
+  #  ensure => present,
+  #  owner  => $user,
+  #  group  => $group,
+  #  mode   => '0664',
+  #} -> Minecraft::Op<| |>
+  #
+  #file { "${homedir}/banned-players.txt":
+  #  ensure => present,
+  #  owner  => $user,
+  #  group  => $group,
+  #  mode   => '0664',
+  #} -> Minecraft::Ban<| |>
+  #
+  #file { "${homedir}/banned-ips.txt":
+  #  ensure => present,
+  #  owner  => $user,
+  #  group  => $group,
+  #  mode   => '0664',
+  #} -> Minecraft::Ipban<| |>
+  #
+  #file { "${homedir}/white-list.txt":
+  #  ensure => present,
+  #  owner  => $user,
+  #  group  => $group,
+  #  mode   => '0664',
+  #} -> Minecraft::Whitelist<| |>
+  #
 
   file { '/etc/systemd/system/minecraft.service':
     ensure  => present,
