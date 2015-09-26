@@ -130,6 +130,7 @@ class minecraft(
     cwd     => "${homedir}",
     command => "cp server.properties.puppet server.properties",
     unless  => 'bash -c "diff -I "^#.*" <(sort server.properties)  <(sort server.properties.puppet)"',
+    user    => $user,
   }
 
   #  file { "${homedir}/ops.txt":
