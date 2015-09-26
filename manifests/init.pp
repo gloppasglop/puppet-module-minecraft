@@ -115,7 +115,7 @@ class minecraft(
     content => template('minecraft/eula.txt.erb'),
     require => User[$user],
   } ->
-  file {"${homedir}/server.properties.tmp":
+  file {"${homedir}/server.properties.puppet":
     ensure  => present,
     owner   => $user,
     group   => $group,
@@ -128,8 +128,8 @@ class minecraft(
   } -> exec {"Copy ${homedir}/server.properties":
     path    => '/usr/bin:/usr/sbin:/bin',
     cwd     => "${homedir}",
-    command => "cp server.properties.tmp server.properties",
-    unless  => 'bash -c "diff -I "^#.*" <(sort server.properties)  <(sort server.properties.tmp)"',
+    command => "cp server.properties.puppet server.properties",
+    unless  => 'bash -c "diff -I "^#.*" <(sort server.properties)  <(sort server.properties.puppet)"',
   }
 
   #  file { "${homedir}/ops.txt":
