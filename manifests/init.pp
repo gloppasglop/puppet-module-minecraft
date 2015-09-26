@@ -125,7 +125,7 @@ class minecraft(
     source      => "${http_root}/Minecraft.Download/versions/${version}/minecraft_server.${version}.jar",
     destination => "${homedir}/minecraft_server_${version}.jar",
     require     => User[$user],
-  } -> exec {"Copy ${homedir}/minecraft_server_${version}.jar":
+  } -> exec {"Copy ${homedir}/server.properties":
     path    => '/usr/bin:/usr/sbin:/bin',
     cwd     => "${homedir}",
     command => "cp server.properties.tmp server.properties",
@@ -171,6 +171,6 @@ class minecraft(
   service { 'minecraft':
     ensure    => running,
     require   => File['/etc/systemd/system/minecraft.service'],
-    subscribe => [ Wget::Fetch["${homedir}/minecraft_server_${version}.jar"], File["${homedir}/server.properties"] ],
+    subscribe => [ Wget::Fetch["${homedir}/minecraft_server_${version}.jar"], Exec["Copy ${homedir}/server.properties"] ],
   }
 }
