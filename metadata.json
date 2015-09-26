@@ -1,6 +1,6 @@
 {
   "name": "gloppasglop-minecraft",
-  "version": "1.4.8",
+  "version": "1.5.0",
   "author": "gloppasglop",
   "summary": "Minecraft module. Copied from branan/puppet-module-minecraft",
   "license": "Apache 2.0",

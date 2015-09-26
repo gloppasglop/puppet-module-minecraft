@@ -129,7 +129,7 @@ class minecraft(
     path    => '/usr/bin:/usr/sbin:/bin',
     cwd     => "${homedir}",
     command => "cp server.properties.tmp server.properties",
-    unless  => 'diff -I "^#.*" <(sort server.properties)  <(sort server.properties.tmp)',
+    unless  => 'bash -c "diff -I "^#.*" <(sort server.properties)  <(sort server.properties.tmp)"',
   }
 
   #  file { "${homedir}/ops.txt":
