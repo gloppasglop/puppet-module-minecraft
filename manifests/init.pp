@@ -115,7 +115,7 @@ class minecraft(
     content => template('minecraft/eula.txt.erb'),
     require => User[$user],
   } ->
-  file {"${homedir}/server.properties":
+  file {"${homedir}/server.properties.tmp":
     ensure  => present,
     owner   => $user,
     group   => $group,
@@ -125,6 +125,11 @@ class minecraft(
     source      => "${http_root}/Minecraft.Download/versions/${version}/minecraft_server.${version}.jar",
     destination => "${homedir}/minecraft_server_${version}.jar",
     require     => User[$user],
+  } -> exec {"Copy ${homedir}/minecraft_server_${version}.jar":
+    path    => '/usr/bin:/usr/sbin:/bin',
+    cwd     => "${homedir}",
+    command => "cp server.properties.tmp server.properties",
+    unless  => 'grep -v "^#" server.properties  | diff server.properties.tmp  -',
   }
 
   file { "${homedir}/ops.txt":
