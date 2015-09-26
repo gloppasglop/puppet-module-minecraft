@@ -128,9 +128,10 @@ class minecraft(
   } -> exec {"Copy ${homedir}/server.properties":
     path    => '/usr/bin:/usr/sbin:/bin',
     cwd     => "${homedir}",
-    command => "cp server.properties.puppet server.properties",
+    command => "cp -p server.properties.puppet server.properties",
     unless  => 'bash -c "diff -I "^#.*" <(sort server.properties)  <(sort server.properties.puppet)"',
     user    => $user,
+    require => User[$user],
   }
 
   #  file { "${homedir}/ops.txt":
