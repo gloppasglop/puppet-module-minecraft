@@ -48,7 +48,7 @@ class minecraft(
   }
 
 
-  firewalld::custom_service{"Minecraft__${server_port}":
+  firewalld::custom_service{"Minecraft_${server_port}":
       short       => "Minecraft_${server_port}",
       description => 'Minecraft',
       port        => [
